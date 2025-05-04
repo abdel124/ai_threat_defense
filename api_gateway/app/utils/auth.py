@@ -1,5 +1,5 @@
 from jose import JWTError, jwt
-from fastapi import Header, HTTPException, Request
+from fastapi import Header, HTTPException
 from typing import Optional
 
 class JWTAuthenticator:

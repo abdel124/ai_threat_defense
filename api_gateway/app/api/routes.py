@@ -1,5 +1,10 @@
+from fastapi import APIRouter, Depends, Header
+from app.models.request import QueryRequest
+from app.services.llm_router import LLMRouter
 from app.utils.auth import JWTAuthenticator
-from fastapi import Header
+from app.core.container import get_jwt_authenticator
+
+router = APIRouter()
 
 @router.post("/query")
 async def route_query(
@@ -9,5 +14,4 @@ async def route_query(
     llm_router: LLMRouter = Depends(LLMRouter)
 ):
     user_info = auth.verify_auth_header(authorization)
-    print("Verified user:", user_info)
     return await llm_router.route_request(request_data)
