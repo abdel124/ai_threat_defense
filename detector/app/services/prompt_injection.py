@@ -1,5 +1,5 @@
 import re
-from detector.services.base import AbstractThreatDetector
+from app.services.base import AbstractThreatDetector
 
 class PromptInjectionDetector(AbstractThreatDetector):
     def scan(self, text: str) -> bool:

@@ -1,5 +1,5 @@
-from detector.services.prompt_injection import PromptInjectionDetector
-from detector.services.base import AbstractThreatDetector
+from app.services.prompt_injection import PromptInjectionDetector
+from app.services.base import AbstractThreatDetector
 
 def get_detector(name: str) -> AbstractThreatDetector:
     if name == "default":
