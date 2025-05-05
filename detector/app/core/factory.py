@@ -1,8 +1,13 @@
-from app.services.prompt_injection import PromptInjectionDetector
-from app.services.base import AbstractThreatDetector
+from detector.services.prompt_injection import PromptInjectionDetector
+from detector.services.pii_profane import PIIDetector
+from detector.services.base import AbstractThreatDetector
 
-def get_detector(name: str) -> AbstractThreatDetector:
-    if name == "default":
-        return PromptInjectionDetector()
-    else:
-        raise ValueError(f"Unsupported detector: {name}")
+class CombinedDetector(AbstractThreatDetector):
+    def __init__(self):
+        self.detectors = [
+            PromptInjectionDetector(),
+            PIIDetector()
+        ]
+
+    def scan(self, text: str) -> bool:
+        return any(detector.scan(text) for detector in self.detectors)
