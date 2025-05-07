@@ -5,7 +5,7 @@ class LLMRouter:
     async def route_request(self, request: QueryRequest) -> dict:
         async with httpx.AsyncClient() as client:
             response = await client.post(
-                "http://llm-proxy:8001/query",
+                "http://127.0.0.1:8001/query",
                 json={"prompt": request.prompt, "model": request.model}
             )
             return {
