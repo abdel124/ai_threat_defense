@@ -17,6 +17,6 @@ class LogEntry(BaseModel):
 async def log_entry(entry: LogEntry):
     log_record = entry.dict()
     log_line = json.dumps(log_record)
-    with open("logs.jsonl", "a") as f:
+    with open("/app/logs/logs.jsonl", "a") as f:
         f.write(log_line + "\n")
     return {"status": "logged"}

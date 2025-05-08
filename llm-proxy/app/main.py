@@ -18,13 +18,13 @@ async def query_llm(req: LLMQuery):
     async with httpx.AsyncClient() as client:
         # Scan output with detector
         detect_response = await client.post(
-            "http://127.0.0.1:8002/detect",
+            "http://detector:8002/detect",
             json={"input_text": result, "user_id": "anonymous"}
         )
         detection_result = detect_response.json()
 
         # Log full interaction
-        await client.post("http://127.0.0.1:8003/log", json={
+        await client.post("http://logger:8003/log", json={
             "user_id": "anonymous",
             "input_text": req.prompt,
             "output_text": result,

@@ -21,13 +21,13 @@ async def route_query(
     # Scan input prompt for threats
     async with httpx.AsyncClient() as client:
         input_scan = await client.post(
-            "http://127.0.0.1:8002/detect",
+            "http://detector:8002/detect",
             json={"input_text": request_data.prompt, "user_id": request_data.user_id}
         )
         input_threat = input_scan.json().get("threat_detected", False)
 
         # Log the prompt before LLM call
-        await client.post("http://127.0.0.1:8003/log", json={
+        await client.post("http://logger:8003/log", json={
             "user_id": request_data.user_id,
             "input_text": request_data.prompt,
             "output_text": "",
