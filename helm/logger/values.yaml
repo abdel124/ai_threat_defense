@@ -1,0 +1,24 @@
+replicaCount: 1
+
+image:
+  repository: your-dockerhub-user/logger
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8003
+
+persistence:
+  enabled: true
+  storageClass: standard  # or ebs/aws if using EKS
+  accessMode: ReadWriteMany
+  size: 1Gi
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi

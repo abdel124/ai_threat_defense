@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "logger.fullname" . }}
+  labels:
+    app: {{ include "logger.name" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8003
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "logger.name" . }}

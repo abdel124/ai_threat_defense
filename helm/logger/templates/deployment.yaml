@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "logger.fullname" . }}
+  labels:
+    app: {{ include "logger.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "logger.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "logger.name" . }}
+    spec:
+      containers:
+        - name: logger
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8003
+          volumeMounts:
+            - name: logs
+              mountPath: /app/logs
+#           resources:
+# {{ toYaml .Values.resources | indent 12 }}
+      volumes:
+        - name: logs
+          persistentVolumeClaim:
+            claimName: {{ include "logger.fullname" . }}-pvc
