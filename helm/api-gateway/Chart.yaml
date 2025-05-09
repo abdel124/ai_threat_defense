@@ -1,0 +1,9 @@
+# Chart.yaml
+apiVersion: v2
+name: api-gateway
+version: 0.1.0
+description: Helm chart for the API Gateway service in the AI Threat Defense Platform
+
+type: application
+
+dependencies: []

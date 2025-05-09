@@ -4,7 +4,7 @@ from app.services.base import AbstractLLMClient
 
 def get_llm_backend(name: str) -> AbstractLLMClient:
     if name == "openai":
-        return OpenAIClient(api_key="your-openai-key")
+        return OpenAIClient(api_key="")
     elif name == "local":
         return LocalLLMClient()
     else:

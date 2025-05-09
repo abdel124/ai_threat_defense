@@ -35,6 +35,11 @@ async def route_query(
             "output_threat_detected": False,
             "timestamp": datetime.utcnow().isoformat()
         })
+        if input_threat:
+            return {
+                "message": "Input prompt flagged as unsafe. Request blocked.",
+                "input_threat_detected": True
+            }, 403
 
     # Forward to LLM proxy and get response
     response = await llm_router.route_request(request_data)
