@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "llm-proxy.fullname" . }}
+  labels:
+    app: {{ include "llm-proxy.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "llm-proxy.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "llm-proxy.name" . }}
+    spec:
+      containers:
+        - name: llm-proxy
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8001
+          env:
+            - name: OPENAI_API_KEY
+              value: "{{ .Values.env.OPENAI_API_KEY }}"
+#           resources:
+# {{ toYaml .Values.resources | indent 12 }}
