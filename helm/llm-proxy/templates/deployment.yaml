@@ -23,5 +23,3 @@ spec:
           env:
             - name: OPENAI_API_KEY
               value: "{{ .Values.env.OPENAI_API_KEY }}"
-#           resources:
-# {{ toYaml .Values.resources | indent 12 }}

@@ -1,16 +1,18 @@
 replicaCount: 1
 
 image:
-  repository: llm-proxy
+  repository: threat-dashboard
   tag: local
   pullPolicy: IfNotPresent
 
-env:
-  OPENAI_API_KEY: "your-api-key"
-
 service:
   type: ClusterIP
-  port: 8001
+  port: 8501
+
+persistence:
+  enabled: true
+  sharedVolumeName: logger-logs
+  mountPath: /app/logs
 
 resources:
   limits:

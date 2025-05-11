@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "threat-dashboard.fullname" . }}
+  labels:
+    app: {{ include "threat-dashboard.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "threat-dashboard.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "threat-dashboard.name" . }}
+    spec:
+      containers:
+        - name: threat-dashboard
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8501
+          volumeMounts:
+            - name: shared-logs
+              mountPath: {{ .Values.persistence.mountPath }}
+      volumes:
+        - name: shared-logs
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.sharedVolumeName }}

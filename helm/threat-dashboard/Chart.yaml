@@ -1,0 +1,5 @@
+apiVersion: v2
+name: threat-dashboard
+version: 0.1.0
+description: Helm chart for the Streamlit-based Threat Dashboard
+type: application

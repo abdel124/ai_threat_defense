@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: your-dockerhub-user/api-gateway
-  tag: latest
+  repository: api-gateway
+  tag: local
   pullPolicy: IfNotPresent
 
 service:

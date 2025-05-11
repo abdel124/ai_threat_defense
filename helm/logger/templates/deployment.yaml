@@ -23,8 +23,6 @@ spec:
           volumeMounts:
             - name: logs
               mountPath: /app/logs
-#           resources:
-# {{ toYaml .Values.resources | indent 12 }}
       volumes:
         - name: logs
           persistentVolumeClaim:
