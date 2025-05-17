@@ -22,21 +22,8 @@ jobs:
         service: [api-gateway, llm-proxy, detector, logger, threat-dashboard]
 
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ vars.VERSION_BUMPER_APPID }}
-          private-key: ${{ secrets.VERSION_BUMPER_SECRET }}
-
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # pulls all history and tags for Lerna to detect which packages changed
-          token: ${{ steps.app-token.outputs.token }}
-
-      - run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -58,7 +45,6 @@ jobs:
           docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
-
       - name: Update Helm values file
         run: |
           ENV_FILE=helm/${{ matrix.service }}/values.yaml
@@ -66,6 +52,17 @@ jobs:
           IMAGE_TAG=${{ github.ref_name }}
           echo "Updating $SERVICE tag in $ENV_FILE to $IMAGE_TAG"
           yq eval ".\"$SERVICE\".image.tag = \"$IMAGE_TAG\"" -i $ENV_FILE
+
+      # - name: Commit & Push Helm update with PAT
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+      #   run: |
+      #     git config user.name "github-actions[bot]"
+      #     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      #     git add "helm/${{ matrix.service }}/values.yaml"
+      #     git commit -m "Update logger image tag to ${{ github.ref_name }}" || echo "No changes to commit"
+      #     git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
 
       - name: Commit & Push Helm Value Change
         env:
@@ -79,6 +76,7 @@ jobs:
 
           git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
           
+
       - name: Commit updated Helm values
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
