@@ -38,6 +38,6 @@ jobs:
       - name: Build and push Docker image
         run: |
           IMAGE_TAG=${{ github.ref_name }}
-          docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
+          docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./ai_threat_defense/${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
