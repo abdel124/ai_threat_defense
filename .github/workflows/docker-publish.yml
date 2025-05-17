@@ -43,7 +43,7 @@ jobs:
 
       - name: Update Helm values file
         run: |
-          ENV_FILE=helm/${{ matrix.service }/values.yaml
+          ENV_FILE=helm/${{ matrix.service }}/values.yaml
           SERVICE=${{ matrix.service }}
           IMAGE_TAG=${{ github.ref_name }}
           echo "Updating $SERVICE tag in $ENV_FILE to $IMAGE_TAG"
