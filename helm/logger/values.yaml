@@ -1,19 +1,15 @@
 replicaCount: 1
-
 image:
   repository: logger
   tag: local
   pullPolicy: IfNotPresent
-
 service:
   type: ClusterIP
   port: 8003
-
 persistence:
   enabled: true
   existingClaim: shared-logger-pvc
   mountPath: /app/logs
-
 resources:
   limits:
     cpu: 300m
@@ -21,3 +17,6 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
+logger:
+  image:
+    tag: main
