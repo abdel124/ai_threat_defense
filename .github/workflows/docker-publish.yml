@@ -58,8 +58,7 @@ jobs:
 
           git add "helm/${{ matrix.service }}/values.yaml"
           git commit -m "Update logger image tag to ${{ github.ref_name }}" || echo "No changes to commit"
-
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+          git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
 
       - name: Commit updated Helm values
         uses: stefanzweifel/git-auto-commit-action@v5
