@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [api_gateway, llm-proxy, detector, logger, threat-dashboard]
+        service: [api-gateway, llm-proxy, detector, logger, threat-dashboard]
 
     steps:
       - name: Checkout repository
