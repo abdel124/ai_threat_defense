@@ -41,3 +41,17 @@ jobs:
           docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
+      - name: Update Helm values file
+        run: |
+          ENV_FILE=helm/llm-platform/values-${{ github.ref_name }}.yaml
+          SERVICE=${{ matrix.service }}
+          IMAGE_TAG=${{ github.ref_name }}
+          echo "Updating $SERVICE tag in $ENV_FILE to $IMAGE_TAG"
+          yq eval ".\"$SERVICE\".image.tag = \"$IMAGE_TAG\"" -i $ENV_FILE
+
+      - name: Commit updated Helm values
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update ${{ matrix.service }} image tag to ${{ github.ref_name }}"
+          branch: ${{ github.ref_name }}
+          file_pattern: "helm/llm-platform/values-${{ github.ref_name }}.yaml"
