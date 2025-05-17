@@ -11,9 +11,8 @@ service:
 
 persistence:
   enabled: true
-  storageClass: standard  # or ebs/aws if using EKS
-  accessMode: ReadWriteMany
-  size: 1Gi
+  existingClaim: shared-logger-pvc
+  mountPath: /app/logs
 
 resources:
   limits:

@@ -13,6 +13,7 @@ class LLMQuery(BaseModel):
 @app.post("/query")
 async def query_llm(req: LLMQuery):
     llm_client = get_llm_backend(req.model.lower())
+   # print('kiki ', llm_client)
     result = await llm_client.query(req.prompt)
 
     async with httpx.AsyncClient() as client:
