@@ -43,7 +43,7 @@ jobs:
 
       - name: Update Helm values file
         run: |
-          ENV_FILE=helm/llm-platform/values.yaml
+          ENV_FILE=helm/${{ matrix.service }}/values.yaml
           SERVICE=${{ matrix.service }}
           IMAGE_TAG=${{ github.ref_name }}
           echo "Updating $SERVICE tag in $ENV_FILE to $IMAGE_TAG"
@@ -54,4 +54,4 @@ jobs:
         with:
           commit_message: "Update ${{ matrix.service }} image tag to ${{ github.ref_name }}"
           branch: ${{ github.ref_name }}
-          file_pattern: "helm/llm-platform/values.yaml"
+          file_pattern: "helm/${{ matrix.service }}/values.yaml"
