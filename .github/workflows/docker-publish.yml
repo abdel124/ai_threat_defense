@@ -1,4 +1,4 @@
-name: Build & Push Docker Images per Environment
+name: Build & Push Docker Images per Environment.
 
 on:
   push:
