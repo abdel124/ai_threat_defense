@@ -50,6 +50,8 @@ jobs:
           yq eval ".\"$SERVICE\".image.tag = \"$IMAGE_TAG\"" -i $ENV_FILE
 
       - name: Commit & Push Helm update with PAT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
