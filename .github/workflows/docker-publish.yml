@@ -1,4 +1,4 @@
-name: Build & Push Docker Images per Environment.
+name: Build & Push Docker Images per Environment
 
 on:
   push:
@@ -9,8 +9,6 @@ on:
 env:
   REGISTRY: docker.io
   IMAGE_PREFIX: ${{ secrets.DOCKERHUB_USERNAME }}
-  #GIT_USER: github-actions
-  #GIT_EMAIL: github-actions@github.com
 
 jobs:
   build-and-push:
@@ -22,8 +20,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        # with:
-        #   token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -47,16 +43,15 @@ jobs:
 
       - name: Update Helm values file
         run: |
-          TAG=${{ github.ref_name }}
-          FILE=helm/${{ matrix.service }}/values.yaml
-          yq -i ".\"${{ matrix.service }}\".image.tag = \"${TAG}\"" "$FILE"
+          ENV_FILE=helm/${{ matrix.service }/values.yaml
+          SERVICE=${{ matrix.service }}
+          IMAGE_TAG=${{ github.ref_name }}
+          echo "Updating $SERVICE tag in $ENV_FILE to $IMAGE_TAG"
+          yq eval ".\"$SERVICE\".image.tag = \"$IMAGE_TAG\"" -i $ENV_FILE
 
-      - name: Commit & push updated Helm values
-        # env:
-        #   GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "$GIT_USER"
-          git config user.email "$GIT_EMAIL"
-          git add helm/${{ matrix.service }}/values.yaml
-          git commit -m "Update ${{ matrix.service }} image tag to ${{ github.ref_name }}" || echo "No changes"
-          git push origin ${{ github.ref_name }}
+      - name: Commit updated Helm values
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update ${{ matrix.service }} image tag to ${{ github.ref_name }}"
+          branch: ${{ github.ref_name }}
+          file_pattern: "helm/${{ matrix.service }}/values.yaml"
