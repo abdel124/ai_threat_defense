@@ -58,6 +58,7 @@ jobs:
           docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
+
       - name: Update Helm values file
         run: |
           ENV_FILE=helm/${{ matrix.service }}/values.yaml
@@ -66,6 +67,18 @@ jobs:
           echo "Updating $SERVICE tag in $ENV_FILE to $IMAGE_TAG"
           yq eval ".\"$SERVICE\".image.tag = \"$IMAGE_TAG\"" -i $ENV_FILE
 
+      - name: Commit & Push Helm Value Change
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config user.name "llm-devops-bot"
+          git config user.email "llm-bot@aithreat.dev"
+
+          git add helm/logger/values.yaml
+          git commit -m "Update logger image tag to ${{ github.ref_name }}" || echo "No changes to commit"
+
+          git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+          
       - name: Commit updated Helm values
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
