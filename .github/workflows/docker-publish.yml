@@ -45,12 +45,12 @@ jobs:
           docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
-      - name: Update Helm Values File (safe tag overwrite)
+      - name: Update Helm Values File
         run: |
           FILE="helm/${{ matrix.service }}/values.yaml"
-          OLD_REPO=$(yq '.["${{ matrix.service }}"].image.repository' "$FILE")
-          OLD_POLICY=$(yq '.["${{ matrix.service }}"].image.pullPolicy' "$FILE")
-          yq -i ".\"${{ matrix.service }}\".image = {\"repository\": \"${OLD_REPO}\", \"tag\": \"${{ github.ref_name }}ss\", \"pullPolicy\": \"${OLD_POLICY}\"}" "$FILE"
+          yq e '.["${{ matrix.service }}"].image.tag = strenv(NEW_TAG)' -i "$FILE"
+        env:
+          NEW_TAG: ${{ github.ref_name }}ss
 
       - name: Commit and Push Helm Changes
         env:
