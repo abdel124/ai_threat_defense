@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: api-gateway
-  tag: main
+  tag: mainss
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
