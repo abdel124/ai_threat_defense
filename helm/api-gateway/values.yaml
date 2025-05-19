@@ -1,14 +1,11 @@
 replicaCount: 1
-
 image:
   repository: api-gateway
   tag: local
   pullPolicy: IfNotPresent
-
 service:
   type: ClusterIP
   port: 8000
-
 resources:
   limits:
     cpu: 500m
@@ -16,6 +13,8 @@ resources:
   requests:
     cpu: 250m
     memory: 256Mi
-
 env:
   JWT_SECRET: serverless
+api-gateway:
+  image:
+    tag: main
