@@ -17,3 +17,8 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
+logger:
+  image:
+    repository: "null"
+    tag: mainss
+    pullPolicy: "null"
