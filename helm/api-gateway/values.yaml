@@ -15,6 +15,3 @@ resources:
     memory: 256Mi
 env:
   JWT_SECRET: serverless
-api-gateway:
-  image:
-    tag: main

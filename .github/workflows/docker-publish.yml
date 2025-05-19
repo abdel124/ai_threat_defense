@@ -48,9 +48,8 @@ jobs:
       - name: Update Helm Values File
         run: |
           FILE="helm/${{ matrix.service }}/values.yaml"
-          echo "Updating $FILE: .${{ matrix.service }}.image.tag = ${{ github.ref_name }}"
-          echo "yq -i ".\"${{ matrix.service }}\".image.tag = \"${{ github.ref_name }}\"" "$FILE""
-          yq -i ".\"${{ matrix.service }}\".image.tag = \"${{ github.ref_name }}\"" "$FILE"
+          echo "Updating image tag for api-gateway in $FILE"
+          yq -i '.["${{ matrix.service }}"].image.tag = "${{ github.ref_name }}" ss' "$FILE"
 
       - name: Commit and Push Helm Changes
         env:
