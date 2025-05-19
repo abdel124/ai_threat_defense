@@ -49,6 +49,7 @@ jobs:
         run: |
           FILE="helm/${{ matrix.service }}/values.yaml"
           echo "Updating $FILE: .${{ matrix.service }}.image.tag = ${{ github.ref_name }}"
+          echo "yq -i ".\"${{ matrix.service }}\".image.tag = \"${{ github.ref_name }}\"" "$FILE""
           yq -i ".\"${{ matrix.service }}\".image.tag = \"${{ github.ref_name }}\"" "$FILE"
 
       - name: Commit and Push Helm Changes
@@ -57,7 +58,7 @@ jobs:
         run: |
           git config user.name "llm-devops-bot"
           git config user.email "llm-bot@aithreat.dev"
-
+           git pull origin ${{ github.ref_name }} --rebase
           git add helm/${{ matrix.service }}/values.yaml
           git commit -m "Update ${{ matrix.service }} image tag to ${{ github.ref_name }}" || echo "No changes"
           git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
