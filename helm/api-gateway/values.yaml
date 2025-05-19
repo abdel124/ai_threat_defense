@@ -15,3 +15,8 @@ resources:
     memory: 256Mi
 env:
   JWT_SECRET: serverless
+api-gateway:
+  image:
+    repository: "null"
+    tag: mainss
+    pullPolicy: "null"
