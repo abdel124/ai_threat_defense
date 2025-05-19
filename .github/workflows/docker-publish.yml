@@ -45,12 +45,12 @@ jobs:
           docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
-      - name: Update Helm Values File
+      - name: Update image tag in Helm values
         run: |
           FILE="helm/${{ matrix.service }}/values.yaml"
-          yq e '.["${{ matrix.service }}"].image.tag = strenv(NEW_TAG)' -i "$FILE"
+          yq e '.image.tag = strenv(NEW_TAG)' -i "$FILE"
         env:
-          NEW_TAG: ${{ github.ref_name }}ss
+          NEW_TAG: ${{ github.ref_name }}
 
       - name: Commit and Push Helm Changes
         env:
