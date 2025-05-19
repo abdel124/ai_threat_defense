@@ -60,5 +60,10 @@ jobs:
           git config user.email "llm-bot@aithreat.dev"
           git add helm/${{ matrix.service }}/values.yaml
           git commit -m "Update ${{ matrix.service }} image tag to ${{ github.ref_name }}" || echo "No changes."
-          git pull origin ${{ github.ref_name }} --rebase
-          git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
+          for i in {1..5}; do
+            echo "Attempt $i to pull --rebase and push..."
+            git pull origin ${{ github.ref_name }} --rebase && \
+            git push https://x-access-token:${GH_PAT}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }} && break
+            echo "Push failed. Retrying in $((i * 2)) seconds..."
+            sleep $((i * 2))
+          done
