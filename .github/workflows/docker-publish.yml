@@ -50,7 +50,7 @@ jobs:
           FILE="helm/${{ matrix.service }}/values.yaml"
           yq e '.image.tag = strenv(NEW_TAG)' -i "$FILE"
         env:
-          NEW_TAG: ${{ github.ref_name }}ss
+          NEW_TAG: ${{ github.ref_name }}
 
       - name: Commit and Push Helm Changes
         env:
