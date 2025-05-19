@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: logger
-  tag: local
+  tag: main
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
