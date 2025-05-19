@@ -1,7 +1,7 @@
 replicaCount: 1
 image:
   repository: llm-proxy
-  tag: main
+  tag: mainss
   pullPolicy: IfNotPresent
 env:
   OPENAI_API_KEY: "your-api-key"
