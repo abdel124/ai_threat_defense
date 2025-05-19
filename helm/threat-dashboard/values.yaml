@@ -17,6 +17,3 @@ resources:
   requests:
     cpu: 250m
     memory: 256Mi
-threat-dashboard:
-  image:
-    tag: mainss

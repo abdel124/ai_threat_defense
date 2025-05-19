@@ -45,11 +45,12 @@ jobs:
           docker build -t $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG ./${{ matrix.service }}
           docker push $REGISTRY/$IMAGE_PREFIX/${{ matrix.service }}:$IMAGE_TAG
 
-      - name: Update Helm Values File
+      - name: Update Helm Values File (safe tag overwrite)
         run: |
           FILE="helm/${{ matrix.service }}/values.yaml"
-          echo "Updating image tag for api-gateway in $FILE"
-          yq -i '.["${{ matrix.service }}"].image.tag = "${{ github.ref_name }}ss" ' "$FILE"
+          OLD_REPO=$(yq '.["${{ matrix.service }}"].image.repository' "$FILE")
+          OLD_POLICY=$(yq '.["${{ matrix.service }}"].image.pullPolicy' "$FILE")
+          yq -i ".\"${{ matrix.service }}\".image = {\"repository\": \"${OLD_REPO}\", \"tag\": \"${{ github.ref_name }}ss\", \"pullPolicy\": \"${OLD_POLICY}\"}" "$FILE"
 
       - name: Commit and Push Helm Changes
         env:
