@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: llm-proxy
+  repository: abdel124/llm-proxy
   tag: main
   pullPolicy: IfNotPresent
 env:

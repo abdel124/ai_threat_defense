@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: threat-dashboard
+  repository: abdel124/threat-dashboard
   tag: main
   pullPolicy: IfNotPresent
 service:

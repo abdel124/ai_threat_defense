@@ -1,11 +1,14 @@
 replicaCount: 1
 image:
-  repository: api-gateway
+  repository: abdel124/api-gateway
   tag: main
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
   port: 8000
+ingress:
+  enabled: true
+  host: localhost
 resources:
   limits:
     cpu: 500m

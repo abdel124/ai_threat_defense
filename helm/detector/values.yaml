@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: detector
+  repository: abdel124/detector
   tag: main
   pullPolicy: IfNotPresent
 service:

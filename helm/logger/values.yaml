@@ -1,6 +1,6 @@
 replicaCount: 1
 image:
-  repository: logger
+  repository: abdel124/logger
   tag: main
   pullPolicy: IfNotPresent
 service:

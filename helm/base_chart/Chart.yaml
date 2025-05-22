@@ -1,0 +1,4 @@
+apiVersion: v2
+name: base-chart
+description: Shared base for all microservices
+version: 0.1.0
