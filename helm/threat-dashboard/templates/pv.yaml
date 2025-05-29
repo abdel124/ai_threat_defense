@@ -8,4 +8,4 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: /tmp/logger-logs
+    path: /tmp/shared-logs
