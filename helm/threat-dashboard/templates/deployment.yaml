@@ -19,11 +19,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 8501
+            - containerPort: {{ .Values.service.port }}
           volumeMounts:
-            - name: shared-logs
-              mountPath: {{ .Values.persistence.mountPath }}
+            - name: log-volume
+              mountPath: {{ .Values.volume.mountPath }}
       volumes:
-        - name: shared-logs
+        - name: log-volume
           persistentVolumeClaim:
-            claimName: {{ .Values.persistence.sharedVolumeName }}
+            claimName: {{ .Values.volume.claimName }}
