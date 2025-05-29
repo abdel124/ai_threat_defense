@@ -6,14 +6,13 @@ image:
 service:
   type: ClusterIP
   port: 8003
-persistence:
-  enabled: true
-  existingClaim: shared-logger-pvc
-  mountPath: /app/logs
 resources:
   limits:
-    cpu: 300m
-    memory: 256Mi
+    cpu: 500m
+    memory: 512Mi
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 250m
+    memory: 256Mi
+volume:
+  mountPath: /app/logs
+  claimName: shared-logger-pvc
