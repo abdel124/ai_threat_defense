@@ -1,13 +1,10 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "logger.fullname" . }}
-  labels:
-    app: {{ include "logger.name" . }}
+  name: logger-pvc
 spec:
   accessModes:
-    - {{ .Values.persistence.accessMode }}
+    - ReadWriteMany
   resources:
     requests:
-      storage: {{ .Values.persistence.size }}
-  storageClassName: {{ .Values.persistence.storageClass }}
+      storage: 1Gi
