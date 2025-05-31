@@ -5,9 +5,9 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Set environment variables directly to avoid issues with Streamlit watchers
+# Set environment variables directly to avoid issues with Streamlit watchers#
 ENV STREAMLIT_SERVER_FILEWATCHERTYPE=none \
     STREAMLIT_SERVER_ENABLECORS=false \
     STREAMLIT_SERVER_ENABLEXSRFPROTECTION=false
 
-CMD ["streamlit", "run", "dashboard.py"]
+CMD ["streamlit", "run", "dashboard.py" ,"--server.port=8501" ,"--server.address=0.0.0.0" ,"--server.enableCORS=false"]
