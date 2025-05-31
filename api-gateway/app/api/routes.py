@@ -12,6 +12,7 @@ router = APIRouter()
 @router.post("/query")
 async def route_query(
     request_data: QueryRequest,
+    #
     #authorization: str = Header(...),
     #auth: JWTAuthenticator = Depends(get_jwt_authenticator),
     llm_router: LLMRouter = Depends(LLMRouter)
