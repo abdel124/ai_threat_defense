@@ -19,6 +19,13 @@ spec:
         - name: threat-dashboard
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: STREAMLIT_SERVER_FILEWATCHERTYPE
+              value: "none"
+            - name: STREAMLIT_SERVER_ENABLECORS
+              value: "false"
+            - name: STREAMLIT_SERVER_ENABLEXSRFPROTECTION
+              value: "false"
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
