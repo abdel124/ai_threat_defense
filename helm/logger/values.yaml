@@ -15,4 +15,4 @@ resources:
     memory: 256Mi
 volume:
   mountPath: /app/logs
-  claimName: logger-pvc
+  claimName: shared-logs

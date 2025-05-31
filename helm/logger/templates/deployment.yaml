@@ -21,9 +21,9 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
-            - name: log-volume
-              mountPath: {{ .Values.volume.mountPath }}
+            - name: shared-logs
+              mountPath: /app/logs
       volumes:
-        - name: log-volume
+        - name: shared-logs
           persistentVolumeClaim:
-            claimName: {{ .Values.volume.claimName }}
+            claimName: shared-logs-pvc

@@ -16,6 +16,3 @@ resources:
 volume:
   mountPath: /app/logs
   claimName: logger-pvc
-env:
-  - name: STREAMLIT_WATCHDOG_MODE
-    value: "none"
