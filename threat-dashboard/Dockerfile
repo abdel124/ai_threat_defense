@@ -11,7 +11,7 @@ WORKDIR /app
 # Copy requirements and install dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
+RUN pip uninstall -y watchdog  # Disable file watching system-wide
 # Copy the rest of the application
 COPY . .
 
