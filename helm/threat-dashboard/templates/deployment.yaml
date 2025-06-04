@@ -31,12 +31,6 @@ spec:
           volumeMounts:
               - name: shared-logs
                 mountPath: /app/logss
-          command:
-              - streamlit
-              - run
-              - /app/threat_dashboard/app.py
-              - --server.enableXsrfProtection=false
-              - --server.enableWatchdogObserver=false
       volumes:
         - name: shared-logs
           persistentVolumeClaim:
