@@ -20,4 +20,11 @@ EXPOSE 8501
 
 # Disable watchdog observer for containerized environments
 # Disable XSRF protection for cross-origin requests
-CMD ["streamlit", "run", "threat-dashboard/app/main.py", "--server.enableCORS=false", "--server.enableStaticServing=false", "--server.fileWatcherType=false", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "threat-dashboard/app/main.py", \
+     "--server.enableXsrfProtection=false", \
+     "--server.runOnSave=false", \
+     "--server.enableCORS=false", \
+     "--server.enableStaticServing=false", \
+     "--server.fileWatcherType=none", \
+     "--server.port=8501", \
+     "--server.address=0.0.0.0"]
