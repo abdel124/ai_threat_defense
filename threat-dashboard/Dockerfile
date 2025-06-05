@@ -5,4 +5,9 @@ COPY ./app /app/app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["streamlit", "run", "app/main.py", "--server.port=8501", "--server.enableCORS=false"]
+CMD ["streamlit", "run", "app/main.py", \
+     "--server.enableXsrfProtection=false", \
+     "--server.enableCORS=false", \
+     "--server.fileWatcherType=none", \
+     "--server.port=8501", \
+     "--server.address=0.0.0.0"]
