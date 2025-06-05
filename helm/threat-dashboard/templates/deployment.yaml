@@ -31,6 +31,7 @@ spec:
           volumeMounts:
               - name: shared-logs
                 mountPath: /app/logss
+                readOnly: true
       volumes:
         - name: shared-logs
           persistentVolumeClaim:
