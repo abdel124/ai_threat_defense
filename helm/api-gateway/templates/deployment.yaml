@@ -4,6 +4,10 @@ metadata:
   name: {{ include "api-gateway.fullname" . }}
   labels:
     app: {{ include "api-gateway.name" . }}
+  annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "8000"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
