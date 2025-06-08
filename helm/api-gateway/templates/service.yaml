@@ -4,6 +4,7 @@ metadata:
   name: {{ include "api-gateway.fullname" . }}
   labels:
     app: {{ include "api-gateway.name" . }}
+    prometheus: monitored
 spec:
   type: {{ .Values.service.type }}
   ports:
