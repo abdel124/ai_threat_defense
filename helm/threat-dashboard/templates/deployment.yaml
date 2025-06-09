@@ -21,11 +21,3 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.service.port }}
-          volumeMounts:
-              - name: shared-logs
-                mountPath: /app/logss
-                readOnly: true
-      volumes:
-        - name: shared-logs
-          persistentVolumeClaim:
-            claimName: shared-logs-pvc
